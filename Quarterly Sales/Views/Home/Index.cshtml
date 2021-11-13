@@ -1,0 +1,42 @@
+﻿@model List<Sale>
+
+<div class="container">
+<div class="row">
+    <div class="col">
+        <h2>Quarterly Sales</h2>
+    </div>
+</div>
+<form asp-controller="Home" asp-action="Index" method="post" class="form-horizontal">
+    <div class="row">
+        <label class="control-label col-2">Employee</label>
+        <select name="employeeId" class="form-control col-3 m-r-1" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "FirstName"))"></select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+    <div class="row">
+       <div class="col">
+           <table class="table">
+               <thead>
+                   <tr><th>Year</th><th>Quarter</th><th>Employee</th><th>Ammount</th></tr>
+               </thead>
+               <tbody>
+                   @foreach(var sale in Model)
+            {
+                <tr>
+                    <td>@sale.Year</td>
+                    <td>@sale.Quarter</td>
+                    <td>@sale.Employee.FirstName @sale.Employee.LastName</td>
+                    <td>@sale.Ammount.ToString("C")</td>
+                </tr>
+            }
+               <tr>
+                   <td>Total Sales</td>
+                   <td></td>
+                   <td></td>
+                   <td>@ViewBag.TotalSales.ToString("C")</td>
+               </tr>  
+               </tbody>
+           </table>
+       </div>
+    </div>
+</div>
