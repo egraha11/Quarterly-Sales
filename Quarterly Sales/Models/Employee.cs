@@ -33,7 +33,5 @@ namespace Quarterly_Sales.Models
         [Required]
         [Remote("CheckManager", "Validation", AdditionalFields = "FirstName, LastName, DOB")]
         public int ManagerId { get; set; }
-
-
     }
 }
