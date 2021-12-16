@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Quarterly_Sales.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Quarterly_Sales.Controllers
 {
@@ -23,6 +24,9 @@ namespace Quarterly_Sales.Controllers
             context = ctx;
         }
 
+
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
         {
@@ -35,6 +39,7 @@ namespace Quarterly_Sales.Controllers
 
 
 
+        
         [HttpPost]
         public IActionResult Add(Employee employee)
         {

@@ -28,7 +28,7 @@
                     asp-items="@(new SelectList(Model.Sales.OrderBy(s => s.Quarter), "Quarter", "Quarter"))">
                 <option value="@GridDTO.Default">All</option>
             </select>
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <button type="submit" class="btn btn-primary ml-1">Filter</button>
             <button type="submit" name="clear" value="true" class="btn btn-primary">Clear</button>
         </div>
     </form>

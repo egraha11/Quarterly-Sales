@@ -17,8 +17,29 @@
                 <div class="col">
                     <nav class="nav nav-tabs">
                         <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                        <a class="nav-item nav-link" asp-controller="Sales" asp-action="Add">Add Sales</a>
-                        <a class="nav-item nav-link" asp-controller="Employee" asp-action="Add">Add Employee</a>
+                        @using Microsoft.AspNetCore.Identity
+                        @inject SignInManager<User> signInManager
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <a class="nav-item nav-link" asp-controller="Sales" asp-action="Add">Add Sales</a>
+
+                            <form method="post" asp-action="Logout" asp-controller="Account" asp-area="">
+                                <input type="submit" value="Log Out" class="btn btn-primary ml-auto" />
+                                <span>@User.Identity.Name</span>
+                            </form>
+
+                            if (User.IsInRole("Admin"))
+                            {
+                                <a class="nav-item nav-link" asp-controller="Employee" asp-action="Add">Add Employee</a>
+                                <a class="nav-item nav-link" asp-controller="User" asp-action="Index">Manage Users</a>
+                            }
+                        }
+                        else
+                        {
+                            <a class="nav-item nav-link"asp-action="Register" asp-controller="Account" asp-area="">Register</a>
+                            <a asp-action="Login" asp-controller="Account" asp-area="" class="btn btn-primary ml-auto">Log In</a>
+                        }
+
                     </nav>
                 </div>
             </div>

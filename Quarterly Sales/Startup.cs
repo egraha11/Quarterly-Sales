@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Quarterly_Sales.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 namespace Quarterly_Sales
 {
@@ -31,6 +32,13 @@ namespace Quarterly_Sales
             services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddDbContext<SalesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SalesContext")));
+
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireUppercase = true;
+            }
+            ).AddEntityFrameworkStores<SalesContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +59,7 @@ namespace Quarterly_Sales
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();
@@ -69,6 +78,8 @@ namespace Quarterly_Sales
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SalesContext.CreateAdminUser(app.ApplicationServices).Wait();
         }
     }
 }

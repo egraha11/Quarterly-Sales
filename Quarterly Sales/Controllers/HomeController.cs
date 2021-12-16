@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quarterly_Sales.Models;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Quarterly_Sales.Controllers
 {
@@ -32,6 +33,7 @@ namespace Quarterly_Sales.Controllers
         }
 
         
+        [AllowAnonymous]
         public IActionResult List(GridDTO values)
         {
 
